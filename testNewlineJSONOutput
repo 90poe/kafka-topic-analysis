@@ -1,0 +1,230 @@
+{
+  "topic": "in_iot_vessel_sensor_oktopus_yoctopuce_gyroscope",
+  "partition": 0,
+  "offset": 217292,
+  "tstype": "create",
+  "ts": 1567784040025,
+  "key": "9748291",
+  "payload": {
+    "imo": "9748291",
+    "system": "YOCTOPUCE",
+    "subSystem": "NONE",
+    "originatorType": "VESSEL_SYSTEM",
+    "originatorId": "",
+    "eventTime": 1567784040025,
+    "accountId": "8a396ee1-a16b-4cc4-8b54-d3de465b8fc8",
+    "accelerometer": 0.9750000238418579,
+    "compass": 197.89999389648438,
+    "gyro": 0.10000000149011612,
+    "magnetometer": 0.7789999842643738,
+    "tiltX": -0.20000000298023224,
+    "tiltY": 2.299999952316284
+  }
+}
+{
+  "topic": "in_iot_vessel_sensor_oktopus_yoctopuce_gyroscope",
+  "partition": 0,
+  "offset": 217293,
+  "tstype": "create",
+  "ts": 1567784160073,
+  "key": "9748291",
+  "payload": {
+    "imo": "9748291",
+    "system": "YOCTOPUCE",
+    "subSystem": "NONE",
+    "originatorType": "VESSEL_SYSTEM",
+    "originatorId": "",
+    "eventTime": 1567784160073,
+    "accountId": "8a396ee1-a16b-4cc4-8b54-d3de465b8fc8",
+    "accelerometer": 0.9639999866485596,
+    "compass": 197.1999969482422,
+    "gyro": 0,
+    "magnetometer": 0.7630000114440918,
+    "tiltX": -0.20000000298023224,
+    "tiltY": -0.10000000149011612
+  }
+}
+{
+  "topic": "in_iot_vessel_sensor_oktopus_yoctopuce_gyroscope",
+  "partition": 0,
+  "offset": 217294,
+  "tstype": "create",
+  "ts": 1567784280113,
+  "key": "9748291",
+  "payload": {
+    "imo": "9748291",
+    "system": "YOCTOPUCE",
+    "subSystem": "NONE",
+    "originatorType": "VESSEL_SYSTEM",
+    "originatorId": "",
+    "eventTime": 1567784280113,
+    "accountId": "8a396ee1-a16b-4cc4-8b54-d3de465b8fc8",
+    "accelerometer": 0.9670000076293945,
+    "compass": 196,
+    "gyro": 0.10000000149011612,
+    "magnetometer": 0.7839999794960022,
+    "tiltX": -0.10000000149011612,
+    "tiltY": 0.10000000149011612
+  }
+}
+{
+  "topic": "in_iot_vessel_sensor_oktopus_yoctopuce_gyroscope",
+  "partition": 0,
+  "offset": 217295,
+  "tstype": "create",
+  "ts": 1567784400162,
+  "key": "9748291",
+  "payload": {
+    "imo": "9748291",
+    "system": "YOCTOPUCE",
+    "subSystem": "NONE",
+    "originatorType": "VESSEL_SYSTEM",
+    "originatorId": "",
+    "eventTime": 1567784400162,
+    "accountId": "8a396ee1-a16b-4cc4-8b54-d3de465b8fc8",
+    "accelerometer": 0.9760000109672546,
+    "compass": 194.1999969482422,
+    "gyro": 0,
+    "magnetometer": 0.7710000276565552,
+    "tiltX": -0.20000000298023224,
+    "tiltY": 0
+  }
+}
+{
+  "topic": "in_iot_vessel_sensor_oktopus_yoctopuce_gyroscope",
+  "partition": 0,
+  "offset": 217296,
+  "tstype": "create",
+  "ts": 1567784520205,
+  "key": "9748291",
+  "payload": {
+    "imo": "9748291",
+    "system": "YOCTOPUCE",
+    "subSystem": "NONE",
+    "originatorType": "VESSEL_SYSTEM",
+    "originatorId": "",
+    "eventTime": 1567784520205,
+    "accountId": "8a396ee1-a16b-4cc4-8b54-d3de465b8fc8",
+    "accelerometer": 0.9629999995231628,
+    "compass": 193.60000610351562,
+    "gyro": 0.10000000149011612,
+    "magnetometer": 0.7799999713897705,
+    "tiltX": -0.10000000149011612,
+    "tiltY": -0.699999988079071
+  }
+}
+{
+  "topic": "in_iot_vessel_sensor_oktopus_yoctopuce_gyroscope",
+  "partition": 0,
+  "offset": 217297,
+  "tstype": "create",
+  "ts": 1567784640244,
+  "key": "9748291",
+  "payload": {
+    "imo": "9748291",
+    "system": "YOCTOPUCE",
+    "subSystem": "NONE",
+    "originatorType": "VESSEL_SYSTEM",
+    "originatorId": "",
+    "eventTime": 1567784640244,
+    "accountId": "8a396ee1-a16b-4cc4-8b54-d3de465b8fc8",
+    "accelerometer": 0.9539999961853027,
+    "compass": 192.8000030517578,
+    "gyro": 0,
+    "magnetometer": 0.7910000085830688,
+    "tiltX": -0.20000000298023224,
+    "tiltY": -0.6000000238418579
+  }
+}
+{
+  "topic": "in_iot_vessel_sensor_oktopus_yoctopuce_gyroscope",
+  "partition": 0,
+  "offset": 217298,
+  "tstype": "create",
+  "ts": 1567784760292,
+  "key": "9748291",
+  "payload": {
+    "imo": "9748291",
+    "system": "YOCTOPUCE",
+    "subSystem": "NONE",
+    "originatorType": "VESSEL_SYSTEM",
+    "originatorId": "",
+    "eventTime": 1567784760292,
+    "accountId": "8a396ee1-a16b-4cc4-8b54-d3de465b8fc8",
+    "accelerometer": 0.9369999766349792,
+    "compass": 186.8000030517578,
+    "gyro": 0,
+    "magnetometer": 0.7839999794960022,
+    "tiltX": -0.10000000149011612,
+    "tiltY": -2.0999999046325684
+  }
+}
+{
+  "topic": "in_iot_vessel_sensor_oktopus_yoctopuce_gyroscope",
+  "partition": 0,
+  "offset": 217299,
+  "tstype": "create",
+  "ts": 1567784880332,
+  "key": "9748291",
+  "payload": {
+    "imo": "9748291",
+    "system": "YOCTOPUCE",
+    "subSystem": "NONE",
+    "originatorType": "VESSEL_SYSTEM",
+    "originatorId": "",
+    "eventTime": 1567784880332,
+    "accountId": "8a396ee1-a16b-4cc4-8b54-d3de465b8fc8",
+    "accelerometer": 0.9700000286102295,
+    "compass": 179.89999389648438,
+    "gyro": 0.20000000298023224,
+    "magnetometer": 0.7820000052452087,
+    "tiltX": -0.10000000149011612,
+    "tiltY": -4.900000095367432
+  }
+}
+{
+  "topic": "in_iot_vessel_sensor_oktopus_yoctopuce_gyroscope",
+  "partition": 0,
+  "offset": 217300,
+  "tstype": "create",
+  "ts": 1567785000377,
+  "key": "9748291",
+  "payload": {
+    "imo": "9748291",
+    "system": "YOCTOPUCE",
+    "subSystem": "NONE",
+    "originatorType": "VESSEL_SYSTEM",
+    "originatorId": "",
+    "eventTime": 1567785000377,
+    "accountId": "8a396ee1-a16b-4cc4-8b54-d3de465b8fc8",
+    "accelerometer": 0.9200000166893005,
+    "compass": 194.60000610351562,
+    "gyro": 0.10000000149011612,
+    "magnetometer": 0.7789999842643738,
+    "tiltX": 0.20000000298023224,
+    "tiltY": -0.6000000238418579
+  }
+}
+{
+  "topic": "in_iot_vessel_sensor_oktopus_yoctopuce_gyroscope",
+  "partition": 0,
+  "offset": 217301,
+  "tstype": "create",
+  "ts": 1567785120413,
+  "key": "9748291",
+  "payload": {
+    "imo": "9748291",
+    "system": "YOCTOPUCE",
+    "subSystem": "NONE",
+    "originatorType": "VESSEL_SYSTEM",
+    "originatorId": "",
+    "eventTime": 1567785120413,
+    "accountId": "8a396ee1-a16b-4cc4-8b54-d3de465b8fc8",
+    "accelerometer": 0.9390000104904175,
+    "compass": 194.3000030517578,
+    "gyro": 0,
+    "magnetometer": 0.7749999761581421,
+    "tiltX": 0.10000000149011612,
+    "tiltY": -1.2999999523162842
+  }
+}
