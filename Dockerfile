@@ -4,7 +4,7 @@ WORKDIR /app
 COPY ./ /app
 
 
-RUN go mod tidy && CGO_ENABLED=0 GOOS=linux go build -a -o ./kafkanalysis-linux .
+RUN CGO_ENABLED=0 GOOS=linux go build -a -o ./kafkanalysis-linux .
 
 
 FROM moh90poe/kafkacat:v1.4.0-avro
