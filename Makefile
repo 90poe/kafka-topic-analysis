@@ -17,11 +17,11 @@ deps:
 
 .PHONY: unit_test
 unit_test:
-	go test -v -cover `go list ./... | grep -v tests_system`
+	go test -v -cover ./...
 
 .PHONY: dockerise
 dockerise:
-	docker build -t kafkanalysis:v0.0.0 .
+	docker build .
 
 .PHONY: lint
 lint:
