@@ -2,7 +2,6 @@ package env
 
 import (
 	"fmt"
-	"github.com/90poe/service-chassis/logging"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 	"log"
@@ -17,7 +16,6 @@ const (
 
 type Config struct {
 	PrettyLogOutput bool
-	LogLevel        logging.Level
 	JSONFilePath    string
 	CreateTable     bool
 	ToCSV           bool
@@ -70,11 +68,6 @@ func Init() {
 	toCSV := pflag.Bool("toCSV", false, "Output to a CSV File: output.csv")
 
 	// Optional arg flags
-
-	logLevel, err := logging.ParseLevel(viper.GetString("LOG_LEVEL"))
-	if err != nil {
-		panic(fmt.Sprintf("failed to parse log level: %v", err))
-	}
 	pflag.Parse()
 
 	if *version {
@@ -83,7 +76,6 @@ func Init() {
 	}
 
 	Settings = &Config{
-		LogLevel:        *logLevel,
 		PrettyLogOutput: true,
 		JSONFilePath:    *jsonFilepath,
 		CreateTable:     *createTable,

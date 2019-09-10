@@ -14,5 +14,5 @@ RUN apt-get update; \
 
 
 # Copy our static executable
-COPY --from=builder ./artifacts/kafkanalysis-linux /kafkanalysis
-COPY --from=builder ./VERSION /
+COPY --from=builder ./app/kafkanalysis-linux /usr/bin/kafkanalysis
+COPY --from=builder ./app/VERSION /
