@@ -10,7 +10,7 @@ var (
 	EntryFactory logging.LogEntryFactory
 )
 
-func init() {
+func Init() {
 
 	// Log as JSON instead of the default ASCII formatter.
 	logging.Init(env.Settings.LogLevel, os.Stdout, env.Settings.PrettyLogOutput)
@@ -22,6 +22,8 @@ func init() {
 	ParseFileError = EntryFactory.MakeEntry(logging.ERROR, 2000, "FAILED TO PARSE JSON INPUT FILE")
 	JSONDecodingError = EntryFactory.MakeEntry(logging.ERROR, 2001, "JSON DECODING ERROR")
 	ErrorOpeningFile = EntryFactory.MakeEntry(logging.ERROR, 2002, "ERROR OPENING FILE")
+	CreateFileError = EntryFactory.MakeEntry(logging.ERROR, 2003, "ERROR CREATING FILE")
+	WriteToFileError = EntryFactory.MakeEntry(logging.ERROR, 2004, "ERROR WRITING TO FILE")
 
 	// 3000 DEBUG
 
@@ -38,6 +40,8 @@ var (
 	ParseFileError    logging.EntryFunc
 	JSONDecodingError logging.EntryFunc
 	ErrorOpeningFile  logging.EntryFunc
+	CreateFileError   logging.EntryFunc
+	WriteToFileError  logging.EntryFunc
 
 	// 3000 INFO
 

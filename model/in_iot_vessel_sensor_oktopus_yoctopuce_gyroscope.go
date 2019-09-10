@@ -1,6 +1,7 @@
 package model
 
 import (
+	"encoding/csv"
 	"encoding/json"
 	"github.com/olekukonko/tablewriter"
 	"io"
@@ -138,18 +139,18 @@ func CalculateEventTimeIntervals(eventTimes EventTimes) Intervals {
 	return intervals
 }
 
-func CreateTable(eventTimes EventTimes, magnetometer, compass, accelerometer, gyro, tiltX, tiltY DeviceReadings) {
+func CreateTable(eventTimes EventTimes, magnetometer, compass, accelerometer, gyro, tiltX, tiltY DeviceReadings) [][]string {
 	var dataTable [][]string
 	for i := 0; i <= len(eventTimes)-1; i++ {
 		eventTimeString := time.Unix(eventTimes[i]/1000, 0).UTC().Format(time.RFC822)
-		m := strconv.FormatFloat(magnetometer[i], 'f', -1, 64)
-		c := strconv.FormatFloat(compass[i], 'f', -1, 64)
-		a := strconv.FormatFloat(accelerometer[i], 'f', -1, 64)
-		tX := strconv.FormatFloat(tiltX[i], 'f', -1, 64)
-		tY := strconv.FormatFloat(tiltY[i], 'f', -1, 64)
-		g := strconv.FormatFloat(gyro[i], 'f', -1, 64)
+		magnetometerValue := strconv.FormatFloat(magnetometer[i], 'f', -1, 64)
+		compassValue := strconv.FormatFloat(compass[i], 'f', -1, 64)
+		accelerometerValue := strconv.FormatFloat(accelerometer[i], 'f', -1, 64)
+		tiltXValue := strconv.FormatFloat(tiltX[i], 'f', -1, 64)
+		tiltYValue := strconv.FormatFloat(tiltY[i], 'f', -1, 64)
+		gyroValue := strconv.FormatFloat(gyro[i], 'f', -1, 64)
 
-		dataTable = append(dataTable, []string{eventTimeString, m, c, a, g, tX, tY})
+		dataTable = append(dataTable, []string{eventTimeString, magnetometerValue, compassValue, accelerometerValue, gyroValue, tiltXValue, tiltYValue})
 	}
 
 	table := tablewriter.NewWriter(os.Stdout)
@@ -160,4 +161,25 @@ func CreateTable(eventTimes EventTimes, magnetometer, compass, accelerometer, gy
 	table.SetColMinWidth(0, 75)
 	table.SetRowLine(true)
 	table.Render()
+	return dataTable
+}
+
+func ToCSVFile(dataTable [][]string) {
+	// to csv
+	file, err := os.Create("output.csv")
+	if err != nil {
+		log.CreateFileError().Write(err.Error())
+	}
+	defer file.Close()
+
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	for _, value := range dataTable {
+		err := writer.Write(value)
+		if err != nil {
+			log.WriteToFileError().Write(err.Error())
+		}
+	}
+	log.GenericInfo().Write("The file has bee successfully created: output.csv")
 }

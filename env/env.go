@@ -10,59 +10,86 @@ import (
 )
 
 //VERSION of the Program
-const VERSION = "v0.1.0"
+const (
+	VERSION     = "v0.1.0"
+	DESCRIPTION = "THIS TOOL HAS BEEN DESIGNED TO TAKE NEWLINE DELIMITED JSON OUTPUT FROM KAFKACAT, AND \nPROVIDE AN ANALYSIS OF THE EVENT TIMES, ACCELEROMETER, GYRO, COMPASS, MAGNETOMETER, TILTX \nAND Y READINGS AND SOME BASIC PROBABILITY ANALYSIS OF WHERE THE DATA IS PREDICTED TIO LIE BASED ON POISSON DISTRIBUTION." //nolint
+)
 
 type Config struct {
 	PrettyLogOutput bool
 	LogLevel        logging.Level
-	OutputConfig    bool
-	HealthcheckPort int
 	JSONFilePath    string
+	CreateTable     bool
+	ToCSV           bool
+	Operation       string
 }
 
 var Settings *Config
 
+//List of operations understood by a program
+const (
+	OperationAnalyse  = "analyse"
+	OperationDescribe = "describe"
+)
+
 func (c *Config) verifyOperations() { //nolint
 	var errorMsg string
-
-	if len(c.JSONFilePath) == 0 {
-		errorMsg = "The path to the json output from kafkacat, for analysis"
+	switch c.Operation {
+	case OperationAnalyse:
+		if len(c.JSONFilePath) == 0 {
+			errorMsg = "The path to the JSON output file from kafkacat must be provided."
+		}
+	case OperationDescribe:
+		//nothing is needed for this case
+	default:
+		errorMsg = fmt.Sprintf("Unknown operation: %v", c.Operation)
 	}
-
 	if len(errorMsg) != 0 {
 		log.Println(errorMsg)
 		pflag.PrintDefaults()
 		os.Exit(1)
 	}
 }
-func init() {
+
+func Init() {
 
 	viper.AutomaticEnv()
 
 	viper.SetEnvPrefix("APP")
-	viper.SetDefault("PRETTY_LOG_OUTPUT", true)
 	viper.SetDefault("LOG_LEVEL", "DEBUG")
-	viper.SetDefault("OUTPUT_CONFIG", false)
-	viper.SetDefault("HEALTHCHECK_PORT", 8888)
+	version := pflag.BoolP("version", "v", false, "Prints the current version")
+	operation := pflag.String("operation", "", fmt.Sprintf(`Operation to perform:
+  %s - Analyse a set of results and the time gaps between the data
+  %s - Describe the application`,
+		OperationAnalyse,
+		OperationDescribe))
 
-	version := pflag.BoolP("version", "v", false, "prints the current version")
 	// Compulsory arg flags
-	jsonFilepath := pflag.StringP("json-filepath", "j", "", "the path to the json file")
+	jsonFilepath := pflag.String("json-filepath", "", "The path to the JSON output file from kafkacat")
+	createTable := pflag.Bool("create-table", false, "Creates a table")
+	toCSV := pflag.Bool("toCSV", false, "Output to a CSV File: output.csv")
+
+	// Optional arg flags
 
 	logLevel, err := logging.ParseLevel(viper.GetString("LOG_LEVEL"))
 	if err != nil {
 		panic(fmt.Sprintf("failed to parse log level: %v", err))
 	}
+	pflag.Parse()
+
 	if *version {
 		fmt.Printf("Version: %s\n", VERSION)
 		os.Exit(0)
 	}
 
 	Settings = &Config{
-		PrettyLogOutput: viper.GetBool("PRETTY_LOG_OUTPUT"),
 		LogLevel:        *logLevel,
-		OutputConfig:    viper.GetBool("OUTPUT_CONFIG"),
-		HealthcheckPort: viper.GetInt("HEALTHCHECK_PORT"),
+		PrettyLogOutput: true,
 		JSONFilePath:    *jsonFilepath,
+		CreateTable:     *createTable,
+		ToCSV:           *toCSV,
+		Operation:       *operation,
 	}
+
+	Settings.verifyOperations()
 }

@@ -4,7 +4,7 @@ SHELL=/bin/bash
 ci: all
 
 .PHONY: all
-all: lint unit_test build
+all: lint unit_test build dockerise
 
 .PHONY: build
 build:
@@ -20,7 +20,11 @@ unit_test:
 	go test -v -cover `go list ./... | grep -v tests_system`
 
 .PHONY: system_test
-system_test: build
+system_test: build dockerise
+
+.PHONY: dockerise
+dockerise:
+	docker build -t kafkanalysis:v0.0.0 .
 
 .PHONY: lint
 lint:
