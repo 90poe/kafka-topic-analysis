@@ -19,9 +19,6 @@ deps:
 unit_test:
 	go test -v -cover `go list ./... | grep -v tests_system`
 
-.PHONY: system_test
-system_test: build dockerise
-
 .PHONY: dockerise
 dockerise:
 	docker build -t kafkanalysis:v0.0.0 .
