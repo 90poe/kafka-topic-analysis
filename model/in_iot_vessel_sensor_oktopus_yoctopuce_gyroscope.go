@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"github.com/olekukonko/tablewriter"
 	"io"
-	"kafka-topic-analysis/log"
+	"log"
 	"os"
 	"strconv"
 	"time"
@@ -55,7 +55,7 @@ func NewData() Dataset {
 func (dataset *Dataset) JSONFileToStruct(filename string) error {
 	f, err := os.Open(filename)
 	if err != nil {
-		log.ErrorOpeningFile().Write(err.Error())
+		log.Println(err.Error())
 		return err
 	}
 	d := json.NewDecoder(f)
@@ -64,7 +64,7 @@ func (dataset *Dataset) JSONFileToStruct(filename string) error {
 		if err := d.Decode(&v); err == io.EOF {
 			break // done decoding file
 		} else if err != nil {
-			log.JSONDecodingError().Write(err.Error())
+			log.Println(err.Error())
 			return err
 		}
 		*dataset = append(*dataset, v)
@@ -168,7 +168,7 @@ func ToCSVFile(dataTable [][]string) {
 	// to csv
 	file, err := os.Create("output.csv")
 	if err != nil {
-		log.CreateFileError().Write(err.Error())
+		log.Println(err.Error())
 	}
 	defer file.Close()
 
@@ -178,8 +178,8 @@ func ToCSVFile(dataTable [][]string) {
 	for _, value := range dataTable {
 		err := writer.Write(value)
 		if err != nil {
-			log.WriteToFileError().Write(err.Error())
+			log.Println(err.Error())
 		}
 	}
-	log.GenericInfo().Write("The file has bee successfully created: output.csv")
+	log.Println("The file has bee successfully created: output.csv")
 }

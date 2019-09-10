@@ -16,7 +16,7 @@ github.com/davecgh/go-spew/spew
 github.com/fsnotify/fsnotify
 # github.com/gbrlsnchs/jwt/v2 v2.0.0
 github.com/gbrlsnchs/jwt/v2
-# github.com/hashicorp/hcl v0.0.0-20180404174102-ef8a98b0bbce
+# github.com/hashicorp/hcl v1.0.0
 github.com/hashicorp/hcl
 github.com/hashicorp/hcl/hcl/printer
 github.com/hashicorp/hcl/hcl/ast
@@ -36,17 +36,17 @@ github.com/lestrrat-go/jwx/jwk
 github.com/lestrrat-go/jwx/internal/base64
 github.com/lestrrat-go/jwx/internal/option
 github.com/lestrrat-go/jwx/jwa
-# github.com/magiconair/properties v1.7.6
+# github.com/magiconair/properties v1.8.0
 github.com/magiconair/properties
 # github.com/mattn/go-runewidth v0.0.4
 github.com/mattn/go-runewidth
-# github.com/mitchellh/mapstructure v0.0.0-20180220230111-00c29f56e238
+# github.com/mitchellh/mapstructure v1.1.2
 github.com/mitchellh/mapstructure
 # github.com/olekukonko/tablewriter v0.0.1
 github.com/olekukonko/tablewriter
 # github.com/patrickmn/go-cache v2.1.0+incompatible
 github.com/patrickmn/go-cache
-# github.com/pelletier/go-toml v1.1.0
+# github.com/pelletier/go-toml v1.2.0
 github.com/pelletier/go-toml
 # github.com/pkg/errors v0.8.0
 github.com/pkg/errors
@@ -54,16 +54,16 @@ github.com/pkg/errors
 github.com/pmezard/go-difflib/difflib
 # github.com/sirupsen/logrus v1.4.2
 github.com/sirupsen/logrus
-# github.com/spf13/afero v1.1.0
+# github.com/spf13/afero v1.1.2
 github.com/spf13/afero
 github.com/spf13/afero/mem
-# github.com/spf13/cast v1.2.0
+# github.com/spf13/cast v1.3.0
 github.com/spf13/cast
-# github.com/spf13/jwalterweatherman v0.0.0-20180109140146-7c0cea34c8ec
+# github.com/spf13/jwalterweatherman v1.0.0
 github.com/spf13/jwalterweatherman
-# github.com/spf13/pflag v1.0.1
+# github.com/spf13/pflag v1.0.3
 github.com/spf13/pflag
-# github.com/spf13/viper v1.0.2
+# github.com/spf13/viper v1.4.0
 github.com/spf13/viper
 # github.com/stretchr/testify v1.4.0
 github.com/stretchr/testify/assert

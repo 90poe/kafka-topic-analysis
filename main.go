@@ -5,7 +5,7 @@ import (
 	"github.com/hermanschaaf/stats"
 	"github.com/spf13/pflag"
 	"kafka-topic-analysis/env"
-	"kafka-topic-analysis/log"
+	"log"
 	"kafka-topic-analysis/mathematicalfunctions"
 	"kafka-topic-analysis/model"
 	"os"
@@ -17,7 +17,6 @@ var dataTable [][]string
 
 func main() {
 	env.Init()
-	log.Init()
 
 	switch env.Settings.Operation {
 	case env.OperationDescribe:
@@ -29,7 +28,7 @@ func main() {
 		dataset := model.NewData()
 		err := dataset.JSONFileToStruct(env.Settings.JSONFilePath)
 		if err != nil {
-			log.ParseFileError().Writef("Failed to parse file from location: %v", env.Settings.JSONFilePath)
+			log.Printf("Failed to parse file from location: %v", env.Settings.JSONFilePath)
 		}
 
 		accelerometerValues := model.ExtractAccelerometerValues(&dataset)
