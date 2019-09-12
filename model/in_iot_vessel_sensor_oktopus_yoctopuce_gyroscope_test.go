@@ -111,7 +111,7 @@ func TestIOTVesselSensorOktopusYoctopuceGyroscope_JsonToStruct(t *testing.T) {
 	Dt := NewData()
 
 	// Act
-	err := Dt.JSONFileToStruct("/Users/moh/go/src/kafka-topic-analysis/testNewlineJSONOutput")
+	err := Dt.JSONFileToStruct("../testNewlineJSONOutput")
 
 	// Assert
 	// test first dataset
@@ -144,7 +144,7 @@ func TestIOTVesselSensorOktopusYoctopuceGyroscope_JsonToStruct(t *testing.T) {
 func TestExtractAccelerometerValues(t *testing.T) {
 	// Arrange
 	Dt := NewData()
-	err := Dt.JSONFileToStruct("/Users/moh/go/src/kafka-topic-analysis/testNewlineJSONOutput")
+	err := Dt.JSONFileToStruct("../testNewlineJSONOutput")
 	var expectedValues = DeviceReadings{0.9750000238418579, 0.9639999866485596, 0.9670000076293945, 0.9760000109672546, 0.9629999995231628, 0.9539999961853027, 0.9369999766349792, 0.9700000286102295, 0.9200000166893005, 0.9390000104904175}
 
 	// Act
@@ -158,7 +158,7 @@ func TestExtractAccelerometerValues(t *testing.T) {
 func TestExtractGyroValues(t *testing.T) {
 	// Arrange
 	Dt := NewData()
-	err := Dt.JSONFileToStruct("/Users/moh/go/src/kafka-topic-analysis/testNewlineJSONOutput")
+	err := Dt.JSONFileToStruct("../testNewlineJSONOutput")
 	var expectedValues = DeviceReadings{0.10000000149011612, 0, 0.10000000149011612, 0, 0.10000000149011612, 0, 0, 0.20000000298023224, 0.10000000149011612, 0}
 
 	// Act
@@ -172,7 +172,7 @@ func TestExtractGyroValues(t *testing.T) {
 func TestExtractMagnetometerValues(t *testing.T) {
 	// Arrange
 	Dt := NewData()
-	err := Dt.JSONFileToStruct("/Users/moh/go/src/kafka-topic-analysis/testNewlineJSONOutput")
+	err := Dt.JSONFileToStruct("../testNewlineJSONOutput")
 	var expectedValues = DeviceReadings{0.7789999842643738, 0.7630000114440918, 0.7839999794960022, 0.7710000276565552, 0.7799999713897705, 0.7910000085830688, 0.7839999794960022, 0.7820000052452087, 0.7789999842643738, 0.7749999761581421}
 
 	// Act
@@ -186,7 +186,7 @@ func TestExtractMagnetometerValues(t *testing.T) {
 func TestExtractCompassValues(t *testing.T) {
 	// Arrange
 	Dt := NewData()
-	err := Dt.JSONFileToStruct("/Users/moh/go/src/kafka-topic-analysis/testNewlineJSONOutput")
+	err := Dt.JSONFileToStruct("../testNewlineJSONOutput")
 	var expectedValues = DeviceReadings{197.89999389648438, 197.1999969482422, 196, 194.1999969482422, 193.60000610351562, 192.8000030517578, 186.8000030517578, 179.89999389648438, 194.60000610351562, 194.3000030517578}
 
 	// Act
@@ -200,7 +200,7 @@ func TestExtractCompassValues(t *testing.T) {
 func TestExtractTiltXValues(t *testing.T) {
 	// Arrange
 	Dt := NewData()
-	err := Dt.JSONFileToStruct("/Users/moh/go/src/kafka-topic-analysis/testNewlineJSONOutput")
+	err := Dt.JSONFileToStruct("../testNewlineJSONOutput")
 	var expectedValues = DeviceReadings{-0.20000000298023224, -0.20000000298023224, -0.10000000149011612, -0.20000000298023224, -0.10000000149011612, -0.20000000298023224, -0.10000000149011612, -0.10000000149011612, 0.20000000298023224, 0.10000000149011612}
 
 	// Act
@@ -214,7 +214,7 @@ func TestExtractTiltXValues(t *testing.T) {
 func TestExtractTiltYValues(t *testing.T) {
 	// Arrange
 	Dt := NewData()
-	err := Dt.JSONFileToStruct("/Users/moh/go/src/kafka-topic-analysis/testNewlineJSONOutput")
+	err := Dt.JSONFileToStruct("../testNewlineJSONOutput")
 	var expectedValues = DeviceReadings{2.299999952316284, -0.10000000149011612, 0.10000000149011612, 0, -0.699999988079071, -0.6000000238418579, -2.0999999046325684, -4.900000095367432, -0.6000000238418579, -1.2999999523162842}
 
 	// Act
@@ -228,7 +228,7 @@ func TestExtractTiltYValues(t *testing.T) {
 func TestExtractEventTimes(t *testing.T) {
 	// Arrange
 	Dt := NewData()
-	err := Dt.JSONFileToStruct("/Users/moh/go/src/kafka-topic-analysis/testNewlineJSONOutput")
+	err := Dt.JSONFileToStruct("../testNewlineJSONOutput")
 	var expectedValues = EventTimes{1567784040025, 1567784160073, 1567784280113, 1567784400162, 1567784520205, 1567784640244, 1567784760292, 1567784880332, 1567785000377, 1567785120413}
 
 	// Act
@@ -242,7 +242,7 @@ func TestExtractEventTimes(t *testing.T) {
 func TestCalculateEventTimeIntervals(t *testing.T) {
 	// Arrange
 	Dt := NewData()
-	err := Dt.JSONFileToStruct("/Users/moh/go/src/kafka-topic-analysis/testNewlineJSONOutput")
+	err := Dt.JSONFileToStruct("../testNewlineJSONOutput")
 	var expectedValues = Intervals{120048, 120040, 120049, 120043, 120039, 120048, 120040, 120045, 120036}
 	eventTimes := ExtractEventTimes(&Dt)
 
@@ -257,7 +257,7 @@ func TestCalculateEventTimeIntervals(t *testing.T) {
 func TestCreateTable(t *testing.T) {
 	// Arrange
 	Dt := NewData()
-	err := Dt.JSONFileToStruct("/Users/moh/go/src/kafka-topic-analysis/testNewlineJSONOutput")
+	err := Dt.JSONFileToStruct("../testNewlineJSONOutput")
 	accelerometerValues := ExtractAccelerometerValues(&Dt)
 	compassValues := ExtractCompassValues(&Dt)
 	gyroValues := ExtractGyroValues(&Dt)
