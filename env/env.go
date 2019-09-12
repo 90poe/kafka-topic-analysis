@@ -3,7 +3,6 @@ package env
 import (
 	"fmt"
 	"github.com/spf13/pflag"
-	"github.com/spf13/viper"
 	"log"
 	"os"
 )
@@ -15,11 +14,10 @@ const (
 )
 
 type Config struct {
-	PrettyLogOutput bool
-	JSONFilePath    string
-	CreateTable     bool
-	ToCSV           bool
-	Operation       string
+	JSONFilePath string
+	CreateTable  bool
+	ToCSV        bool
+	Operation    string
 }
 
 var Settings *Config
@@ -50,11 +48,6 @@ func (c *Config) verifyOperations() { //nolint
 }
 
 func Init() {
-
-	viper.AutomaticEnv()
-
-	viper.SetEnvPrefix("APP")
-	viper.SetDefault("LOG_LEVEL", "DEBUG")
 	version := pflag.BoolP("version", "v", false, "Prints the current version")
 	operation := pflag.String("operation", "", fmt.Sprintf(`Operation to perform:
   %s - Analyse a set of results and the time gaps between the data
@@ -76,11 +69,10 @@ func Init() {
 	}
 
 	Settings = &Config{
-		PrettyLogOutput: true,
-		JSONFilePath:    *jsonFilepath,
-		CreateTable:     *createTable,
-		ToCSV:           *toCSV,
-		Operation:       *operation,
+		JSONFilePath: *jsonFilepath,
+		CreateTable:  *createTable,
+		ToCSV:        *toCSV,
+		Operation:    *operation,
 	}
 
 	Settings.verifyOperations()
