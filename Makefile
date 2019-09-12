@@ -4,7 +4,7 @@ SHELL=/bin/bash
 ci: all
 
 .PHONY: all
-all: lint deps unit_test build dockerise
+all: lint unit_test build dockerise
 
 .PHONY: build
 build:
