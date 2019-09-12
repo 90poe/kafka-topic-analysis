@@ -5,9 +5,9 @@ import (
 	"github.com/hermanschaaf/stats"
 	"github.com/spf13/pflag"
 	"kafka-topic-analysis/env"
-	"log"
 	"kafka-topic-analysis/mathematicalfunctions"
 	"kafka-topic-analysis/model"
+	"log"
 	"os"
 )
 
