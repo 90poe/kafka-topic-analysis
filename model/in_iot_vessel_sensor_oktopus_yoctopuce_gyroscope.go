@@ -166,20 +166,12 @@ func CreateTable(eventTimes EventTimes, magnetometer, compass, accelerometer, gy
 		dataTable = append(dataTable, []string{eventTimeString, magnetometerValue, compassValue, accelerometerValue, gyroValue, tiltXValue, tiltYValue})
 	}
 
-	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader([]string{"_______Event_Time_______", "Magnetometer", "Compass", "Accelerometer", "Gyro", "TiltX", "TiltY"})
-	for _, v := range dataTable {
-		table.Append(v)
-	}
-	table.SetColMinWidth(0, 75)
-	table.SetRowLine(true)
-	table.Render()
 	return dataTable
 }
 
-func ToCSVFile(dataTable [][]string) {
+func ToCSVFile(dataTable [][]string, filename string) {
 	// to csv
-	file, err := os.Create("output.csv")
+	file, err := os.Create(filename)
 	if err != nil {
 		log.Println(err.Error())
 	}
@@ -194,5 +186,18 @@ func ToCSVFile(dataTable [][]string) {
 			log.Println(err.Error())
 		}
 	}
-	log.Println("The file has bee successfully created: output.csv")
+	log.Println("The file has bee successfully created: " + filename)
+}
+
+func RenderTable(dataTable [][]string) {
+	table := tablewriter.NewWriter(os.Stdout)
+	table.SetHeader([]string{"_______Event_Time_______", "Magnetometer", "Compass", "Accelerometer", "Gyro", "TiltX", "TiltY"})
+	for _, v := range dataTable {
+		table.Append(v)
+	}
+	table.SetColMinWidth(0, 75)
+	table.SetRowLine(true)
+
+	table.Render()
+
 }
