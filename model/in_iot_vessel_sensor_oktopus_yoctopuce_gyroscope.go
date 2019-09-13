@@ -7,6 +7,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"sort"
 	"strconv"
 	"time"
 )
@@ -123,15 +124,27 @@ func ExtractTiltYValues(dataset *Dataset) DeviceReadings {
 
 func ExtractEventTimes(dataset *Dataset) EventTimes {
 	var eventTimes EventTimes
+	int64AsIntValues := make([]int, len(*dataset))
+
 	for _, eventTime := range *dataset {
 		eventTimes = append(eventTimes, eventTime.Payload.EventTime)
 	}
 
+	// sort the event times
+	for i, val := range eventTimes {
+		int64AsIntValues[i] = int(val)
+	}
+	sort.Ints(int64AsIntValues)
+
+	for i, val := range int64AsIntValues {
+		eventTimes[i] = int64(val)
+	}
 	return eventTimes
 }
 
 func CalculateEventTimeIntervals(eventTimes EventTimes) Intervals {
 	var intervals Intervals
+
 	for i := 0; i < len(eventTimes)-1; i++ {
 		interval := eventTimes[i+1] - eventTimes[i]
 		intervals = append(intervals, int(interval))

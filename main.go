@@ -9,6 +9,7 @@ import (
 	"kafka-topic-analysis/model"
 	"log"
 	"os"
+	"sort"
 )
 
 const lambda = 0.0083333333
@@ -39,6 +40,7 @@ func main() {
 		tiltYValues := model.ExtractTiltYValues(&dataset)
 		eventTimes := model.ExtractEventTimes(&dataset)
 		intervals := model.CalculateEventTimeIntervals(eventTimes)
+		sort.Ints(intervals)
 
 		if env.Settings.CreateTable && !env.Settings.ToCSV {
 			dataTable = model.CreateTable(eventTimes, magnetometerValues, compassValues, accelerometerValues, gyroValues, tiltXValues, tiltYValues)
@@ -80,7 +82,7 @@ func main() {
 		gyroProbability1 := mathematicalfunctions.ProbabilityGreaterThan(lambda, 0.2)
 		gyroProbability2 := mathematicalfunctions.ProbabilityLessThan(lambda, 0)
 		gyroProbability3 := mathematicalfunctions.ProbabilityBetweenTwoValues(lambda, 0.1, 0.3)
-		fmt.Println("\n----------------------------------- Basic Stats Analysis: Gyro Readings -----------------------------------")
+		fmt.Println("----------------------------------- Basic Stats Analysis: Gyro Readings -----------------------------------")
 		fmt.Printf("Gyro Mean: %v °/s \n", gyroMean)
 		fmt.Printf("Gyro Mode: %v °/s\n", gyroMode)
 		fmt.Printf("Gyro Median: %v °/s\n", gyroMedian)
