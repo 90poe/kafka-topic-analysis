@@ -18,6 +18,7 @@ type Config struct {
 	CreateTable  bool
 	ToCSV        bool
 	Operation    string
+	CSVFilename  string
 }
 
 var Settings *Config
@@ -49,16 +50,17 @@ func (c *Config) verifyOperations() { //nolint
 
 func Init() {
 	version := pflag.BoolP("version", "v", false, "Prints the current version")
-	operation := pflag.String("operation", "", fmt.Sprintf(`Operation to perform:
+	operation := pflag.StringP("operation", "o", "", fmt.Sprintf(`Operation to perform:
   %s - Analyse a set of results and the time gaps between the data
   %s - Describe the application`,
 		OperationAnalyse,
 		OperationDescribe))
 
 	// Compulsory arg flags
-	jsonFilepath := pflag.String("json-filepath", "", "The path to the JSON output file from kafkacat")
+	jsonFilepath := pflag.StringP("json-filepath", "j", "", "The path to the JSON output file from kafkacat")
 	createTable := pflag.Bool("create-table", false, "Creates a table")
-	toCSV := pflag.Bool("toCSV", false, "Output to a CSV File: output.csv")
+	toCSV := pflag.Bool("toCSV", false, "Output to a CSV File")
+	csvFilename := pflag.String("csv-filename", "output.csv", "The CSV file to output to, the default is output.csv")
 
 	// Optional arg flags
 	pflag.Parse()
@@ -73,6 +75,7 @@ func Init() {
 		CreateTable:  *createTable,
 		ToCSV:        *toCSV,
 		Operation:    *operation,
+		CSVFilename:  *csvFilename,
 	}
 
 	Settings.verifyOperations()
