@@ -7,10 +7,10 @@ COPY ./ /app
 RUN CGO_ENABLED=0 GOOS=linux go build -a -o ./kafkanalysis-linux .
 
 
-FROM moh90poe/kafkacat:v1.4.0-avro
+FROM edenhill/kafkacat:1.5.0
 
 RUN apt-get update; \
-    apt-get install -y jq grep
+    apt-get install -y jq grep bash
 
 
 # Copy our static executable
