@@ -1,9 +1,7 @@
-package model
+package topics
 
 import (
-	"encoding/csv"
 	"encoding/json"
-	"github.com/olekukonko/tablewriter"
 	"io"
 	"log"
 	"os"
@@ -44,13 +42,23 @@ type Payload struct {
 	TiltY          float64 `json:"tiltY"`
 }
 
+type Values struct {
+	EventTimes    EventTimes
+	Magnetometer  DeviceReadings
+	Compass       DeviceReadings
+	Accelerometer DeviceReadings
+	Gyro          DeviceReadings
+	TiltX         DeviceReadings
+	TiltY         DeviceReadings
+	Intervals     Intervals
+}
+
 func NewIOTVesselSensorOktopusYoctopuceGyroscope() *IOTVesselSensorOktopusYoctopuceGyroscope {
 	return &IOTVesselSensorOktopusYoctopuceGyroscope{}
 }
 
 func NewData() Dataset {
-	var dataset Dataset
-	return dataset
+	return Dataset{}
 }
 
 func (dataset *Dataset) JSONFileToStruct(filename string) error {
@@ -73,7 +81,66 @@ func (dataset *Dataset) JSONFileToStruct(filename string) error {
 	return nil
 }
 
-func ExtractAccelerometerValues(dataset *Dataset) DeviceReadings {
+func RemoveDuplicates(s Dataset) Dataset {
+	var newDataset Dataset
+	oldDataSize := len(s)
+	seen := make(map[IOTVesselSensorOktopusYoctopuceGyroscope]struct{}, oldDataSize)
+	j := 0
+	for _, v := range s {
+		if _, ok := seen[v]; ok {
+			continue
+		}
+		seen[v] = struct{}{}
+		s[j] = v
+		j++
+	}
+	newDataset = s[:j]
+	newDataSize := len(newDataset)
+	log.Printf("Function removed %v messages from the Dataset\n", oldDataSize-newDataSize)
+	return newDataset
+
+}
+
+func GetTopicValues(dataset *Dataset) Values {
+	accelerometerValues := getAccelerometerValues(dataset)
+	compassValues := getCompassValues(dataset)
+	gyroValues := getGyroValues(dataset)
+	magnetometerValues := getMagnetometerValues(dataset)
+	tiltXValues := getTiltXValues(dataset)
+	tiltYValues := getTiltYValues(dataset)
+	eventTimes := getEventTimes(dataset)
+	intervals := calculateEventTimeIntervals(eventTimes)
+
+	return Values{
+		EventTimes:    eventTimes,
+		Magnetometer:  magnetometerValues,
+		Compass:       compassValues,
+		Accelerometer: accelerometerValues,
+		Gyro:          gyroValues,
+		TiltX:         tiltXValues,
+		TiltY:         tiltYValues,
+		Intervals:     intervals,
+	}
+}
+
+func CreateDataTable(results Values) [][]string {
+	var dataTable [][]string
+	for i := 0; i <= len(results.EventTimes)-1; i++ {
+		eventTimeString := time.Unix(results.EventTimes[i]/1000, 0).UTC().Format(time.RFC822)
+		magnetometerValue := strconv.FormatFloat(results.Magnetometer[i], 'f', -1, 64)
+		compassValue := strconv.FormatFloat(results.Compass[i], 'f', -1, 64)
+		accelerometerValue := strconv.FormatFloat(results.Accelerometer[i], 'f', -1, 64)
+		tiltXValue := strconv.FormatFloat(results.TiltX[i], 'f', -1, 64)
+		tiltYValue := strconv.FormatFloat(results.TiltY[i], 'f', -1, 64)
+		gyroValue := strconv.FormatFloat(results.Gyro[i], 'f', -1, 64)
+
+		dataTable = append(dataTable, []string{eventTimeString, gyroValue, magnetometerValue, compassValue, accelerometerValue, tiltXValue, tiltYValue})
+	}
+
+	return dataTable
+}
+
+func getAccelerometerValues(dataset *Dataset) DeviceReadings {
 	var Readings DeviceReadings
 	for _, reading := range *dataset {
 		Readings = append(Readings, float64(reading.Payload.Accelerometer)) //nolint
@@ -81,7 +148,7 @@ func ExtractAccelerometerValues(dataset *Dataset) DeviceReadings {
 	return Readings
 }
 
-func ExtractCompassValues(dataset *Dataset) DeviceReadings {
+func getCompassValues(dataset *Dataset) DeviceReadings {
 	var Readings DeviceReadings
 	for _, reading := range *dataset {
 		Readings = append(Readings, float64(reading.Payload.Compass)) //nolint
@@ -89,7 +156,7 @@ func ExtractCompassValues(dataset *Dataset) DeviceReadings {
 	return Readings
 }
 
-func ExtractGyroValues(dataset *Dataset) DeviceReadings {
+func getGyroValues(dataset *Dataset) DeviceReadings {
 	var Readings DeviceReadings
 	for _, reading := range *dataset {
 		Readings = append(Readings, float64(reading.Payload.Gyro)) //nolint
@@ -97,7 +164,7 @@ func ExtractGyroValues(dataset *Dataset) DeviceReadings {
 	return Readings
 }
 
-func ExtractMagnetometerValues(dataset *Dataset) DeviceReadings {
+func getMagnetometerValues(dataset *Dataset) DeviceReadings {
 	var Readings DeviceReadings
 	for _, reading := range *dataset {
 		Readings = append(Readings, float64(reading.Payload.Magnetometer)) //nolint
@@ -105,7 +172,7 @@ func ExtractMagnetometerValues(dataset *Dataset) DeviceReadings {
 	return Readings
 }
 
-func ExtractTiltXValues(dataset *Dataset) DeviceReadings {
+func getTiltXValues(dataset *Dataset) DeviceReadings {
 	var Readings DeviceReadings
 	for _, reading := range *dataset {
 		Readings = append(Readings, float64(reading.Payload.TiltX)) //nolint
@@ -113,7 +180,7 @@ func ExtractTiltXValues(dataset *Dataset) DeviceReadings {
 	return Readings
 }
 
-func ExtractTiltYValues(dataset *Dataset) DeviceReadings {
+func getTiltYValues(dataset *Dataset) DeviceReadings {
 	var Readings DeviceReadings
 	for _, reading := range *dataset {
 		Readings = append(Readings, float64(reading.Payload.TiltY)) //nolint
@@ -122,7 +189,7 @@ func ExtractTiltYValues(dataset *Dataset) DeviceReadings {
 	return Readings
 }
 
-func ExtractEventTimes(dataset *Dataset) EventTimes {
+func getEventTimes(dataset *Dataset) EventTimes {
 	var eventTimes EventTimes
 	int64AsIntValues := make([]int, len(*dataset))
 
@@ -142,7 +209,7 @@ func ExtractEventTimes(dataset *Dataset) EventTimes {
 	return eventTimes
 }
 
-func CalculateEventTimeIntervals(eventTimes EventTimes) Intervals {
+func calculateEventTimeIntervals(eventTimes EventTimes) Intervals {
 	var intervals Intervals
 
 	for i := 0; i < len(eventTimes)-1; i++ {
@@ -150,54 +217,4 @@ func CalculateEventTimeIntervals(eventTimes EventTimes) Intervals {
 		intervals = append(intervals, int(interval))
 	}
 	return intervals
-}
-
-func CreateTable(eventTimes EventTimes, magnetometer, compass, accelerometer, gyro, tiltX, tiltY DeviceReadings) [][]string {
-	var dataTable [][]string
-	for i := 0; i <= len(eventTimes)-1; i++ {
-		eventTimeString := time.Unix(eventTimes[i]/1000, 0).UTC().Format(time.RFC822)
-		magnetometerValue := strconv.FormatFloat(magnetometer[i], 'f', -1, 64)
-		compassValue := strconv.FormatFloat(compass[i], 'f', -1, 64)
-		accelerometerValue := strconv.FormatFloat(accelerometer[i], 'f', -1, 64)
-		tiltXValue := strconv.FormatFloat(tiltX[i], 'f', -1, 64)
-		tiltYValue := strconv.FormatFloat(tiltY[i], 'f', -1, 64)
-		gyroValue := strconv.FormatFloat(gyro[i], 'f', -1, 64)
-
-		dataTable = append(dataTable, []string{eventTimeString, magnetometerValue, compassValue, accelerometerValue, gyroValue, tiltXValue, tiltYValue})
-	}
-
-	return dataTable
-}
-
-func ToCSVFile(dataTable [][]string, filename string) {
-	// to csv
-	file, err := os.Create(filename)
-	if err != nil {
-		log.Println(err.Error())
-	}
-	defer file.Close()
-
-	writer := csv.NewWriter(file)
-	defer writer.Flush()
-
-	for _, value := range dataTable {
-		err := writer.Write(value)
-		if err != nil {
-			log.Println(err.Error())
-		}
-	}
-	log.Println("The file has bee successfully created: " + filename)
-}
-
-func RenderTable(dataTable [][]string) {
-	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader([]string{"_______Event_Time_______", "Magnetometer", "Compass", "Accelerometer", "Gyro", "TiltX", "TiltY"})
-	for _, v := range dataTable {
-		table.Append(v)
-	}
-	table.SetColMinWidth(0, 75)
-	table.SetRowLine(true)
-
-	table.Render()
-
 }

@@ -1,4 +1,4 @@
-package model
+package topics
 
 import (
 	"encoding/json"
@@ -97,7 +97,7 @@ func TestNewIOTVesselSensorOktopusYoctopuceGyroscope(t *testing.T) {
 
 func TestNewData(t *testing.T) {
 	// Arrange
-	var expectedDataset Dataset
+	var expectedDataset = make(Dataset, 0)
 
 	// Act
 	Dt := NewData()
@@ -145,10 +145,10 @@ func TestExtractAccelerometerValues(t *testing.T) {
 	// Arrange
 	Dt := NewData()
 	err := Dt.JSONFileToStruct("../testNewlineJSONOutput")
-	var expectedValues = DeviceReadings{0.9750000238418579, 0.9639999866485596, 0.9670000076293945, 0.9760000109672546, 0.9629999995231628, 0.9539999961853027, 0.9369999766349792, 0.9700000286102295, 0.9200000166893005, 0.9390000104904175}
+	var expectedValues = DeviceReadings{0.9750000238418579, 0.9639999866485596, 0.9670000076293945, 0.9760000109672546, 0.9629999995231628, 0.9539999961853027, 0.9369999766349792, 0.9700000286102295, 0.9200000166893005, 0.9390000104904175, 0.9390000104904175}
 
 	// Act
-	values := ExtractAccelerometerValues(&Dt)
+	values := getAccelerometerValues(&Dt)
 
 	// Assert
 	assert.Nil(t, err)
@@ -159,10 +159,10 @@ func TestExtractGyroValues(t *testing.T) {
 	// Arrange
 	Dt := NewData()
 	err := Dt.JSONFileToStruct("../testNewlineJSONOutput")
-	var expectedValues = DeviceReadings{0.10000000149011612, 0, 0.10000000149011612, 0, 0.10000000149011612, 0, 0, 0.20000000298023224, 0.10000000149011612, 0}
+	var expectedValues = DeviceReadings{0.10000000149011612, 0, 0.10000000149011612, 0, 0.10000000149011612, 0, 0, 0.20000000298023224, 0.10000000149011612, 0, 0}
 
 	// Act
-	values := ExtractGyroValues(&Dt)
+	values := getGyroValues(&Dt)
 
 	// Assert
 	assert.Nil(t, err)
@@ -173,10 +173,10 @@ func TestExtractMagnetometerValues(t *testing.T) {
 	// Arrange
 	Dt := NewData()
 	err := Dt.JSONFileToStruct("../testNewlineJSONOutput")
-	var expectedValues = DeviceReadings{0.7789999842643738, 0.7630000114440918, 0.7839999794960022, 0.7710000276565552, 0.7799999713897705, 0.7910000085830688, 0.7839999794960022, 0.7820000052452087, 0.7789999842643738, 0.7749999761581421}
+	var expectedValues = DeviceReadings{0.7789999842643738, 0.7630000114440918, 0.7839999794960022, 0.7710000276565552, 0.7799999713897705, 0.7910000085830688, 0.7839999794960022, 0.7820000052452087, 0.7789999842643738, 0.7749999761581421, 0.7749999761581421}
 
 	// Act
-	values := ExtractMagnetometerValues(&Dt)
+	values := getMagnetometerValues(&Dt)
 
 	// Assert
 	assert.Nil(t, err)
@@ -187,10 +187,10 @@ func TestExtractCompassValues(t *testing.T) {
 	// Arrange
 	Dt := NewData()
 	err := Dt.JSONFileToStruct("../testNewlineJSONOutput")
-	var expectedValues = DeviceReadings{197.89999389648438, 197.1999969482422, 196, 194.1999969482422, 193.60000610351562, 192.8000030517578, 186.8000030517578, 179.89999389648438, 194.60000610351562, 194.3000030517578}
+	var expectedValues = DeviceReadings{197.89999389648438, 197.1999969482422, 196, 194.1999969482422, 193.60000610351562, 192.8000030517578, 186.8000030517578, 179.89999389648438, 194.60000610351562, 194.3000030517578, 194.3000030517578}
 
 	// Act
-	values := ExtractCompassValues(&Dt)
+	values := getCompassValues(&Dt)
 
 	// Assert
 	assert.Nil(t, err)
@@ -201,10 +201,10 @@ func TestExtractTiltXValues(t *testing.T) {
 	// Arrange
 	Dt := NewData()
 	err := Dt.JSONFileToStruct("../testNewlineJSONOutput")
-	var expectedValues = DeviceReadings{-0.20000000298023224, -0.20000000298023224, -0.10000000149011612, -0.20000000298023224, -0.10000000149011612, -0.20000000298023224, -0.10000000149011612, -0.10000000149011612, 0.20000000298023224, 0.10000000149011612}
+	var expectedValues = DeviceReadings{-0.20000000298023224, -0.20000000298023224, -0.10000000149011612, -0.20000000298023224, -0.10000000149011612, -0.20000000298023224, -0.10000000149011612, -0.10000000149011612, 0.20000000298023224, 0.10000000149011612, 0.10000000149011612}
 
 	// Act
-	values := ExtractTiltXValues(&Dt)
+	values := getTiltXValues(&Dt)
 
 	// Assert
 	assert.Nil(t, err)
@@ -215,10 +215,10 @@ func TestExtractTiltYValues(t *testing.T) {
 	// Arrange
 	Dt := NewData()
 	err := Dt.JSONFileToStruct("../testNewlineJSONOutput")
-	var expectedValues = DeviceReadings{2.299999952316284, -0.10000000149011612, 0.10000000149011612, 0, -0.699999988079071, -0.6000000238418579, -2.0999999046325684, -4.900000095367432, -0.6000000238418579, -1.2999999523162842}
+	var expectedValues = DeviceReadings{2.299999952316284, -0.10000000149011612, 0.10000000149011612, 0, -0.699999988079071, -0.6000000238418579, -2.0999999046325684, -4.900000095367432, -0.6000000238418579, -1.2999999523162842, -1.2999999523162842}
 
 	// Act
-	values := ExtractTiltYValues(&Dt)
+	values := getTiltYValues(&Dt)
 
 	// Assert
 	assert.Nil(t, err)
@@ -229,10 +229,10 @@ func TestExtractEventTimes(t *testing.T) {
 	// Arrange
 	Dt := NewData()
 	err := Dt.JSONFileToStruct("../testNewlineJSONOutput")
-	var expectedValues = EventTimes{1567784040025, 1567784160073, 1567784280113, 1567784400162, 1567784520205, 1567784640244, 1567784760292, 1567784880332, 1567785000377, 1567785120413}
+	var expectedValues = EventTimes{1567784040025, 1567784160073, 1567784280113, 1567784400162, 1567784520205, 1567784640244, 1567784760292, 1567784880332, 1567785000377, 1567785120413, 1567785120413}
 
 	// Act
-	values := ExtractEventTimes(&Dt)
+	values := getEventTimes(&Dt)
 
 	// Assert
 	assert.Nil(t, err)
@@ -243,11 +243,11 @@ func TestCalculateEventTimeIntervals(t *testing.T) {
 	// Arrange
 	Dt := NewData()
 	err := Dt.JSONFileToStruct("../testNewlineJSONOutput")
-	var expectedValues = Intervals{120048, 120040, 120049, 120043, 120039, 120048, 120040, 120045, 120036}
-	eventTimes := ExtractEventTimes(&Dt)
+	var expectedValues = Intervals{120048, 120040, 120049, 120043, 120039, 120048, 120040, 120045, 120036, 0}
+	eventTimes := getEventTimes(&Dt)
 
 	// Act
-	values := CalculateEventTimeIntervals(eventTimes)
+	values := calculateEventTimeIntervals(eventTimes)
 
 	// Assert
 	assert.Nil(t, err)
@@ -258,18 +258,26 @@ func TestCreateTable(t *testing.T) {
 	// Arrange
 	Dt := NewData()
 	err := Dt.JSONFileToStruct("../testNewlineJSONOutput")
-	accelerometerValues := ExtractAccelerometerValues(&Dt)
-	compassValues := ExtractCompassValues(&Dt)
-	gyroValues := ExtractGyroValues(&Dt)
-	magnetometerValues := ExtractMagnetometerValues(&Dt)
-	tiltXValues := ExtractTiltXValues(&Dt)
-	tiltYValues := ExtractTiltYValues(&Dt)
-	eventTimes := ExtractEventTimes(&Dt)
+	results := GetTopicValues(&Dt)
 
 	// Act
-	CreateTable(eventTimes, magnetometerValues, compassValues, accelerometerValues, gyroValues, tiltXValues, tiltYValues)
+	CreateDataTable(results)
 
 	// Assert
+	assert.Nil(t, err)
+
+}
+
+func TestRemoveDuplicates(t *testing.T) {
+	// Arrange
+	Dt := NewData()
+	err := Dt.JSONFileToStruct("../testNewlineJSONOutput")
+
+	// Act
+	datasetNoDuplicates := RemoveDuplicates(Dt)
+
+	// Assert
+	assert.Equal(t, 10, len(datasetNoDuplicates))
 	assert.Nil(t, err)
 
 }

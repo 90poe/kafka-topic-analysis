@@ -228,3 +228,26 @@
     "tiltY": -1.2999999523162842
   }
 }
+{
+  "topic": "in_iot_vessel_sensor_oktopus_yoctopuce_gyroscope",
+  "partition": 0,
+  "offset": 217301,
+  "tstype": "create",
+  "ts": 1567785120413,
+  "key": "9748291",
+  "payload": {
+    "imo": "9748291",
+    "system": "YOCTOPUCE",
+    "subSystem": "NONE",
+    "originatorType": "VESSEL_SYSTEM",
+    "originatorId": "",
+    "eventTime": 1567785120413,
+    "accountId": "8a396ee1-a16b-4cc4-8b54-d3de465b8fc8",
+    "accelerometer": 0.9390000104904175,
+    "compass": 194.3000030517578,
+    "gyro": 0,
+    "magnetometer": 0.7749999761581421,
+    "tiltX": 0.10000000149011612,
+    "tiltY": -1.2999999523162842
+  }
+}
