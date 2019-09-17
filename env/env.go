@@ -14,11 +14,12 @@ const (
 )
 
 type Config struct {
-	JSONFilePath string
-	CreateTable  bool
-	ToCSV        bool
-	Operation    string
-	CSVFilename  string
+	JSONFilePath     string
+	CreateTable      bool
+	ToCSV            bool
+	RemoveDuplicates bool
+	Operation        string
+	CSVFilename      string
 }
 
 var Settings *Config
@@ -60,6 +61,7 @@ func Init() {
 	jsonFilepath := pflag.StringP("json-filepath", "j", "", "The path to the JSON output file from kafkacat")
 	createTable := pflag.Bool("create-table", false, "Creates a table")
 	toCSV := pflag.Bool("toCSV", false, "Output to a CSV File")
+	removeDuplicates := pflag.BoolP("remove-duplicates", "rm", false, "Remove the duplicate messages from the dataset")
 	csvFilename := pflag.String("csv-filename", "output.csv", "The CSV file to output to, the default is output.csv")
 
 	// Optional arg flags
@@ -71,11 +73,12 @@ func Init() {
 	}
 
 	Settings = &Config{
-		JSONFilePath: *jsonFilepath,
-		CreateTable:  *createTable,
-		ToCSV:        *toCSV,
-		Operation:    *operation,
-		CSVFilename:  *csvFilename,
+		JSONFilePath:     *jsonFilepath,
+		CreateTable:      *createTable,
+		ToCSV:            *toCSV,
+		Operation:        *operation,
+		CSVFilename:      *csvFilename,
+		RemoveDuplicates: *removeDuplicates,
 	}
 
 	Settings.verifyOperations()

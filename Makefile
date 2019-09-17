@@ -17,7 +17,7 @@ deps:
 
 .PHONY: unit_test
 unit_test:
-	go test -v -cover ./...
+	go test -v -cover -count=1 ./...
 
 .PHONY: dockerise
 dockerise:
