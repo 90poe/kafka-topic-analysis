@@ -61,7 +61,7 @@ func Init() {
 	jsonFilepath := pflag.StringP("json-filepath", "j", "", "The path to the JSON output file from kafkacat")
 	createTable := pflag.Bool("create-table", false, "Creates a table")
 	toCSV := pflag.Bool("toCSV", false, "Output to a CSV File")
-	removeDuplicates := pflag.BoolP("remove-duplicates", "rm", false, "Remove the duplicate messages from the dataset")
+	removeDuplicates := pflag.Bool("remove-duplicates", false, "Remove the duplicate messages from the dataset")
 	csvFilename := pflag.String("csv-filename", "output.csv", "The CSV file to output to, the default is output.csv")
 
 	// Optional arg flags

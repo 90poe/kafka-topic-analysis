@@ -9,11 +9,11 @@ import (
 
 func RenderTable(dataTable [][]string) {
 	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader([]string{"_______Event_Time_______", "Gyro", "Magnetometer", "Compass", "Accelerometer", "TiltX", "TiltY"})
+	table.SetHeader([]string{"_______Event_Time_______", "Interval (Seconds)", "Gyro", "Magnetometer", "Compass", "Accelerometer", "TiltX", "TiltY"})
 	for _, v := range dataTable {
 		table.Append(v)
 	}
-	table.SetColMinWidth(0, 75)
+	table.SetColMinWidth(0, 50)
 	table.SetRowLine(true)
 
 	table.Render()

@@ -84,13 +84,13 @@ func (dataset *Dataset) JSONFileToStruct(filename string) error {
 func RemoveDuplicates(s Dataset) Dataset {
 	var newDataset Dataset
 	oldDataSize := len(s)
-	seen := make(map[IOTVesselSensorOktopusYoctopuceGyroscope]struct{}, oldDataSize)
+	seen := make(map[Payload]struct{}, oldDataSize)
 	j := 0
 	for _, v := range s {
-		if _, ok := seen[v]; ok {
+		if _, ok := seen[v.Payload]; ok {
 			continue
 		}
-		seen[v] = struct{}{}
+		seen[v.Payload] = struct{}{}
 		s[j] = v
 		j++
 	}
@@ -126,15 +126,29 @@ func GetTopicValues(dataset *Dataset) Values {
 func CreateDataTable(results Values) [][]string {
 	var dataTable [][]string
 	for i := 0; i <= len(results.EventTimes)-1; i++ {
-		eventTimeString := time.Unix(results.EventTimes[i]/1000, 0).UTC().Format(time.RFC822)
-		magnetometerValue := strconv.FormatFloat(results.Magnetometer[i], 'f', -1, 64)
-		compassValue := strconv.FormatFloat(results.Compass[i], 'f', -1, 64)
-		accelerometerValue := strconv.FormatFloat(results.Accelerometer[i], 'f', -1, 64)
-		tiltXValue := strconv.FormatFloat(results.TiltX[i], 'f', -1, 64)
-		tiltYValue := strconv.FormatFloat(results.TiltY[i], 'f', -1, 64)
-		gyroValue := strconv.FormatFloat(results.Gyro[i], 'f', -1, 64)
+		if i < 1 {
+			eventTimeString := time.Unix(results.EventTimes[i]/1000, 0).UTC().Format(time.RFC822)
+			magnetometerValue := strconv.FormatFloat(results.Magnetometer[i], 'f', -1, 64)
+			compassValue := strconv.FormatFloat(results.Compass[i], 'f', -1, 64)
+			accelerometerValue := strconv.FormatFloat(results.Accelerometer[i], 'f', -1, 64)
+			tiltXValue := strconv.FormatFloat(results.TiltX[i], 'f', -1, 64)
+			tiltYValue := strconv.FormatFloat(results.TiltY[i], 'f', -1, 64)
+			gyroValue := strconv.FormatFloat(results.Gyro[i], 'f', -1, 64)
+			interval := "N/A"
 
-		dataTable = append(dataTable, []string{eventTimeString, gyroValue, magnetometerValue, compassValue, accelerometerValue, tiltXValue, tiltYValue})
+			dataTable = append(dataTable, []string{eventTimeString, interval, gyroValue, magnetometerValue, compassValue, accelerometerValue, tiltXValue, tiltYValue})
+		} else {
+			eventTimeString := time.Unix(results.EventTimes[i]/1000, 0).UTC().Format(time.RFC822)
+			magnetometerValue := strconv.FormatFloat(results.Magnetometer[i], 'f', -1, 64)
+			compassValue := strconv.FormatFloat(results.Compass[i], 'f', -1, 64)
+			accelerometerValue := strconv.FormatFloat(results.Accelerometer[i], 'f', -1, 64)
+			tiltXValue := strconv.FormatFloat(results.TiltX[i], 'f', -1, 64)
+			tiltYValue := strconv.FormatFloat(results.TiltY[i], 'f', -1, 64)
+			gyroValue := strconv.FormatFloat(results.Gyro[i], 'f', -1, 64)
+			interval := strconv.Itoa(results.Intervals[i-1] / 1000)
+
+			dataTable = append(dataTable, []string{eventTimeString, interval, gyroValue, magnetometerValue, compassValue, accelerometerValue, tiltXValue, tiltYValue})
+		}
 	}
 
 	return dataTable

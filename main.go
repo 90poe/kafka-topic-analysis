@@ -28,6 +28,7 @@ func main() {
 		if err != nil {
 			log.Printf("Failed to parse file from location: %v", env.Settings.JSONFilePath)
 		}
+		log.Printf("Analysing %v in Partition %v\n", dataset[0].Topic, dataset[0].Partition)
 
 		if env.Settings.RemoveDuplicates {
 			log.Println("Removing Duplicates...")
